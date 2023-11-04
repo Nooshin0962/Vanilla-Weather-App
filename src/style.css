@@ -44,3 +44,7 @@ line-height: 19px;
 .overview{
     margin-bottom: 20px;
 }
+.weather-app-icon{
+    width: 80px;
+    height: 80px;
+}
