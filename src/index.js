@@ -62,17 +62,19 @@ function formatDay(timestamp){
 }
 
 function displayForecast(response){
-    console.log(response);
+
 
 let forecastHtml = "";
 response.data.daily.forEach(function (day , index) {
-    if(index<5){
+    if(index>0 && index<6){
     forecastHtml =
     forecastHtml +
-`   <div class="weather-forecast-date">${formatDay(day.time)}</div>
+`    <div>
+    <div class="weather-forecast-date">${formatDay(day.time)}</div>
     <img src="${day.condition.icon_url}" width="60px"/>
     <div class="weather-forecast-temperatures">
-        <strong>${Math.round(day.temperature.maximum)}°</strong> <span>${Math.round(day.temperature.minimum)}°</span>  
+        <strong>${Math.round(day.temperature.maximum)}°</strong> &nbsp&nbsp<span>${Math.round(day.temperature.minimum)}°</span>  
+    </div>
     </div>`;
     }
 });
