@@ -47,4 +47,22 @@ let serachFormElement = document.querySelector("#search-form");
 serachFormElement.addEventListener("submit",handleSearchSubmit);
 serachCity("Rome");
 
+function displayForecast(){
+let days = ["Sat","Sun","Mon","Tue","Wed"];
+let forecastHtml = "";
+days.forEach(function (day) {
+    forecastHtml =
+    forecastHtml +
+`   <div class="weather-forecast-date">${day}</div>
+    <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/rain-day.png" width="60px"/>
+    <div class="weather-forecast-temperatures">
+        <strong>18°</strong> <span>12°</span>  
+    </div>`;
+});
+let forecast = document.querySelector("#forecast");
+forecast.innerHTML = forecastHtml;
+}
+displayForecast();
+
+
 
