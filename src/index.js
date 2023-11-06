@@ -15,7 +15,7 @@ let date = new Date(response.data.time * 1000);
 timeElement.innerHTML = formatDate(date);
 let iconElement = document.querySelector("#icon");
 iconElement.innerHTML = `<img src=${response.data.condition.icon_url} class="wheather-app-icon" />`;
-
+getForecast(response.data.city);
 }
 
 function formatDate(date){
@@ -45,24 +45,42 @@ serachCity(searchInput.value);
 
 let serachFormElement = document.querySelector("#search-form");
 serachFormElement.addEventListener("submit",handleSearchSubmit);
-serachCity("Rome");
 
-function displayForecast(){
-let days = ["Sat","Sun","Mon","Tue","Wed"];
+
+function getForecast(city){
+let apiKey = "b60097c3ddaff0a42bft015121o9bfe4";
+let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`
+console.log(apiUrl);
+axios.get(apiUrl).then(displayForecast);
+}
+
+function formatDay(timestamp){
+    let date = new Date(timestamp * 1000);
+    let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+    return days[date.getDay()];
+}
+
+function displayForecast(response){
+    console.log(response);
+
 let forecastHtml = "";
-days.forEach(function (day) {
+response.data.daily.forEach(function (day , index) {
+    if(index<5){
     forecastHtml =
     forecastHtml +
-`   <div class="weather-forecast-date">${day}</div>
-    <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/rain-day.png" width="60px"/>
+`   <div class="weather-forecast-date">${formatDay(day.time)}</div>
+    <img src="${day.condition.icon_url}" width="60px"/>
     <div class="weather-forecast-temperatures">
-        <strong>18°</strong> <span>12°</span>  
+        <strong>${Math.round(day.temperature.maximum)}°</strong> <span>${Math.round(day.temperature.minimum)}°</span>  
     </div>`;
+    }
 });
 let forecast = document.querySelector("#forecast");
 forecast.innerHTML = forecastHtml;
 }
-displayForecast();
+serachCity("Paris");
+
 
 
 
